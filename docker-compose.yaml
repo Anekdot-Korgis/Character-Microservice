@@ -1,0 +1,57 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - '8080:80'
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/static
+      - media_volume:/media
+    depends_on:
+      - web
+  db:
+    image: postgres:15.2
+    restart: always
+    container_name: character_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    image: gitlab-reg.korgs.ru/thrift/thrift-backend:latest
+    container_name: character_service
+    build:
+      context: .
+    command: bash -c 'python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000'
+    volumes:
+      - ./config:/code/config
+      - static_volume:/code/static
+      - media_volume:/code/media
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    labels:
+      - "com.centurylinklabs.watchtower.scope=thrift"
+      - "com.centurylinklabs.watchtower.enable=true"
+    depends_on:
+      - db
+    links:
+      - db
+  watchtower:
+    image: containrrr/watchtower
+    environment:
+        DOCKER_CONFIG: /config
+    volumes:
+      - .docker/:/config/
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "com.centurylinklabs.watchtower.scope=thrift"
+    command: --interval 60 --scope thrift --label-enable
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
