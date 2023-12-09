@@ -5,11 +5,13 @@ app = FastAPI()
 
 
 class Equipment(BaseModel):
+   id: int
    name: str
    strengh_impact: int
    dex_impact: int
    intelligence_impact: int
    luck_impact: int
+   character_id: int
 
 class Character(BaseModel):
    id: int
