@@ -25,12 +25,8 @@ services:
     build:
       context: .
     volumes:
-      - ./config:/code/config
       - static_volume:/code/static
       - media_volume:/code/media
-    labels:
-      - "com.centurylinklabs.watchtower.scope=thrift"
-      - "com.centurylinklabs.watchtower.enable=true"
     depends_on:
       - db
     links:

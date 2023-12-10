@@ -1,13 +1,13 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from database import Base
+from app.database import Base
 
 
 class Equipment(Base):
     __tablename__ = 'equipment'
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(Integer)
-    strengh_impact = Column(Integer, default=0)
+    name = Column(String)
+    strength_impact = Column(Integer, default=0)
     dex_impact = Column(Integer, default=0)
     intelligence_impact = Column(Integer, default=0)
     luck_impact = Column(Integer, default=0)
