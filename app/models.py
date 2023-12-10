@@ -27,3 +27,4 @@ class Character(Base):
     agility = Column(Integer)
     intelligence = Column(Integer)
     luck = Column(Integer)
+    is_active = Column(Boolean)
