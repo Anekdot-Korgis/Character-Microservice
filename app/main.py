@@ -1,6 +1,6 @@
 import asyncio
 from fastapi import FastAPI, Depends
-from app.endpoints.characters_router import characters_router
+from app.endpoints.character_router import characters_router
 
 
 app = FastAPI(title="Characters Service")
