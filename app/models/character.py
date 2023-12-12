@@ -15,4 +15,3 @@ class Character(BaseModel):
     agility: int
     intelligence: int
     luck: int
-    equipment: list[Equipment]
