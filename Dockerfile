@@ -14,4 +14,4 @@ COPY ./alembic.ini /code/alembic.ini
 COPY ./entrypoint.sh /code/entrypoint.sh
 
 RUN chmod +x /code/entrypoint.sh
-CMD ["/code/entrypoint.sh"]
+ENTRYPOINT ["sh", "entrypoint.sh"]
