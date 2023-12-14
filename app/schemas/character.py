@@ -5,7 +5,6 @@ class Character(Base):
     __tablename__ = 'character'
 
     id = Column(Integer, primary_key=True, index=True)
-    #user_id: Column()
     name = Column(String)
     class_name = Column(String)
     level = Column(Integer)
