@@ -18,6 +18,8 @@ class CharacterRepo:
         return result
 
     def __map_to_schema(self, character: Character) -> DBCharacter:
+        if 'equipment' in data:
+            del data['equipment']
         data = dict(character)
         del data['equipment']
         return DBCharacter(**data)
