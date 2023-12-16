@@ -2,7 +2,7 @@
 
 import traceback
 from sqlalchemy.orm import Session
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from app.database import get_db
 from app.models.character import Character
@@ -28,7 +28,7 @@ class CharacterRepo:
 
   def create_character(self, character: Character) -> Character:
       try:
-          character.id = UUID(int=0) # Generate a new UUID
+          character.id = uuid4()
           db_character = self.__map_to_schema(character)
           self.db.add(db_character)
           self.db.commit()
