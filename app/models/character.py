@@ -1,3 +1,5 @@
+# /app/models/character.py
+
 from pydantic import BaseModel, ConfigDict
 
 from app.models.equipment import Equipment

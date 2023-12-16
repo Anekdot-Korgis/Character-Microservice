@@ -1,3 +1,5 @@
+# /app/schemas/equipment.py
+
 from sqlalchemy import Column, Integer, String, ForeignKey
 from app.schemas.base_schema import Base
 

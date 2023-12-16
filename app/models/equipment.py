@@ -1,3 +1,5 @@
+# /app/models/equipment.py
+
 from pydantic import BaseModel, ConfigDict
 
 

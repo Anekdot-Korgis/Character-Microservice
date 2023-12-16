@@ -1,3 +1,5 @@
+# /app/schemas/character.py
+
 from sqlalchemy import Column, Integer, String
 from app.schemas.base_schema import Base
 
