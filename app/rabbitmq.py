@@ -10,50 +10,50 @@ from app.settings import settings
 from app.services.character_service import CharacterService
 from app.repositories.character_repo import CharacterRepo
 from app.models.character import Character
-
+from uuid import UUID
 
 async def process_created_character(msg: IncomingMessage):
-  try:
-      data = json.loads(msg.body.decode())
-      character = Character(
-          id=data['id'],
-          name=data['name'],
-          class_name=data['class_name'],
-          level=data['level'],
-          experience=data['experience'],
-          strength=data['strength'],
-          agility=data['agility'],
-          intelligence=data['intelligence'],
-          luck=data['luck']
-      )
-      repo = CharacterRepo()
-      created_character = repo.create_character(character)
-      await msg.ack()
-      return created_character
-  except:
-      traceback.print_exc()
-      await msg.ack()
+ try:
+     data = json.loads(msg.body.decode())
+     character = Character(
+         id=UUID(data['id']),
+         name=data['name'],
+         class_name=data['class_name'],
+         level=data['level'],
+         experience=data['experience'],
+         strength=data['strength'],
+         agility=data['agility'],
+         intelligence=data['intelligence'],
+         luck=data['luck']
+     )
+     repo = CharacterRepo()
+     created_character = repo.create_character(character)
+     await msg.ack()
+     return created_character
+ except:
+     traceback.print_exc()
+     await msg.ack()
 
 async def process_get_character(msg: IncomingMessage):
-  try:
-      repo = CharacterRepo()
-      characters = repo.get_characters()
-      await msg.ack()
-      return characters
-  except:
-      await msg.ack()
+ try:
+     repo = CharacterRepo()
+     characters = repo.get_characters()
+     await msg.ack()
+     return characters
+ except:
+     await msg.ack()
 
 
 
 async def consume(loop: AbstractEventLoop) -> AbstractRobustConnection:
-    connection = await connect_robust(settings.amqp_url, loop=loop)
-    channel = await connection.channel()
+   connection = await connect_robust(settings.amqp_url, loop=loop)
+   channel = await connection.channel()
 
-    order_created_queue = await channel.declare_queue('created_character_queue', durable=True)
-    order_paid_queue = await channel.declare_queue('get_characters_queue', durable=True)
+   order_created_queue = await channel.declare_queue('created_character_queue', durable=True)
+   order_paid_queue = await channel.declare_queue('get_characters_queue', durable=True)
 
-    await order_created_queue.consume(process_created_character)
-    await order_paid_queue.consume(process_get_character)
-    print('Started RabbitMQ consuming...')
+   await order_created_queue.consume(process_created_character)
+   await order_paid_queue.consume(process_get_character)
+   print('Started RabbitMQ consuming...')
 
-    return connection
+   return connection
