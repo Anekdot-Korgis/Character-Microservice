@@ -3,8 +3,6 @@ name: CI/CD pipeline
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -17,6 +15,7 @@ jobs:
 
       - name: Build docker image
         run: |
+          ls
           docker build ./Microservice --file ./Microservice/Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/microservice-nginx-1:latest
 
       - name: Test solution
@@ -41,6 +40,7 @@ jobs:
 
       - name: Build docker image
         run: |
+          ls
           docker build ./Microservice --file ./Microservice/Dockerfile --tag cr.yandex/${{ secrets.YC_REGISTRY_ID }}/microservice-nginx-1:latest
 
       - name: Login to YC Registry
