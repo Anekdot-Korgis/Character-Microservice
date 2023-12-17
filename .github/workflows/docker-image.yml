@@ -16,7 +16,7 @@ jobs:
       - name: Build docker image
         run: |
           ls
-          docker build ./Microservice --file ./Microservice/Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/microservice-nginx-1:latest
+          docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/microservice-nginx-1:latest
 
       - name: Test solution
         run: |
