@@ -10,6 +10,8 @@ def test_character_service():
  repo = Mock(spec=CharacterRepo)
  service = CharacterService(repo)
 
+ # Установите возвращаемое значение для get_characters
+ repo.get_characters.return_value = []
  characters = service.get_characters()
  assert isinstance(characters, list)
 
