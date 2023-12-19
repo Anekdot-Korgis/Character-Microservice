@@ -10,18 +10,21 @@ def test_character_service():
  repo = Mock(spec=CharacterRepo)
  service = CharacterService(repo)
 
- characters = service.get_characters()
- assert isinstance(characters, list)
-
  character = Character(id=str(uuid.uuid4()), name='test', class_name='test', level=1, experience=0, strength=0, agility=0, intelligence=0, luck=0)
- repo.get_characters.return_value = [character]
+
+ repo.create_character.return_value = character
  created_character = service.create_character(character)
- assert created_character.id == character.id
- assert created_character.name == character.name
- assert created_character.class_name == character.class_name
- assert created_character.level == character.level
- assert created_character.experience == character.experience
- assert created_character.strength == character.strength
- assert created_character.agility == character.agility
- assert created_character.intelligence == character.intelligence
- assert created_character.luck == character.luck
+
+ repo.get_characters.return_value = [created_character]
+ characters = service.get_characters()
+
+ assert len(characters) == 1
+ assert characters[0].id == created_character.id
+ assert characters[0].name == created_character.name
+ assert characters[0].class_name == created_character.class_name
+ assert characters[0].level == created_character.level
+ assert characters[0].experience == created_character.experience
+ assert characters[0].strength == created_character.strength
+ assert characters[0].agility == created_character.agility
+ assert characters[0].intelligence == created_character.intelligence
+ assert characters[0].luck == created_character.luck
