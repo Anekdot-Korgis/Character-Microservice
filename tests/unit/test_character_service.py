@@ -9,7 +9,7 @@ def test_character_service():
  characters = service.get_characters()
  assert isinstance(characters, list)
  character = service.create_character(Character(id=str(uuid.uuid4()), name='test', class_name='test', level=1, experience=0, strength=0, agility=0, intelligence=0, luck=0))
- assert character.id == str(uuid.uuid4())
+ assert isinstance(character.id, uuid.UUID)
  assert character.name == 'test'
  assert character.class_name == 'test'
  assert character.level == 1
