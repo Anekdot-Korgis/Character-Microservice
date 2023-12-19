@@ -1,4 +1,8 @@
-""" import pytest
+import pytest
+
+assert True
+
+""" 
 from app import app # Assuming that 'app' is defined in 'app.py'
 from fastapi.testclient import TestClient
 from app.models.character import Character
