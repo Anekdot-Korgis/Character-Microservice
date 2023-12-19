@@ -4,15 +4,17 @@ from app.services.character_service import CharacterService
 from app.repositories.character_repo import CharacterRepo
 from app.models.character import Character
 import uuid
+from unittest.mock import Mock
 
 def test_character_service():
- repo = CharacterRepo()
+ repo = Mock(spec=CharacterRepo)
  service = CharacterService(repo)
 
  characters = service.get_characters()
  assert isinstance(characters, list)
 
  character = Character(id=str(uuid.uuid4()), name='test', class_name='test', level=1, experience=0, strength=0, agility=0, intelligence=0, luck=0)
+ repo.get_characters.return_value = [character]
  created_character = service.create_character(character)
  assert created_character.id == character.id
  assert created_character.name == character.name
