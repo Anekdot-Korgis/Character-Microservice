@@ -2,7 +2,7 @@ name: CI/CD pipeline
 
 on:
  push:
-   branches: ["main"]
+   branches: ["main","godcode"]
  workflow_dispatch:
 
 jobs:
